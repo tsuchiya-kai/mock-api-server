@@ -13,13 +13,15 @@ export class APIFactoriesController {
     };
   }
 
-  // post用
   @Post('/')
   postSample(@Body() data: any) {
     console.log({ data });
     return {
       status: 200,
-      data,
+      postData: {
+        data,
+        description: 'postされたデータ（request bodyをそのまま返している）',
+      },
     };
   }
 }

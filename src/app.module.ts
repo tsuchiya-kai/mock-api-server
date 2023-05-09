@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { SampleModule } from './sample/sample.module';
+import { APIFactoriesModule } from './APIFactories/APIFactories.module';
 import * as cors from 'cors';
 
 @Module({
-  imports: [SampleModule],
+  imports: [APIFactoriesModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

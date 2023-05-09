@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 
-@Controller('api')
-export class SampleController {
+@Controller('api-factory')
+export class APIFactoriesController {
   private isObject(value: any): boolean {
     return value !== null && typeof value === 'object';
   }
 
-  @Get('sample')
+  @Get('/')
   getSample(): Record<string, unknown> {
     return {
       message: 'Hello, this is a mock API!',
@@ -14,7 +14,7 @@ export class SampleController {
   }
 
   // post用
-  @Post('sample')
+  @Post('/')
   postSample(@Body() data: any) {
     console.log({ data });
     return {

@@ -22,13 +22,18 @@ export class SampleController {
 
   @Get('/')
   getSample(
+    @Req() req: Request,
     @Query() { command }: { command: string },
   ): Record<string, unknown> {
+    const { method, query } = req;
+    const request = { method, query };
     return {
-      message: `この endpoint は GET です。 ${this.commandMessage(command)}`,
+      message: `この endpoint は [GET] です。 ${this.commandMessage(command)}`,
+      request,
     };
   }
 
+  @UseInterceptors(FileFieldsInterceptor([]))
   @Post('/')
   postSample(
     @Req() req: Request,
@@ -42,12 +47,12 @@ export class SampleController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const { url, method, originalUrl, params, query, body } = req;
-    const request = { url, method, originalUrl, params, query, body };
+    const { method, body } = req;
+    const request = { method, body };
 
     return {
       status: 200,
-      message: `この endpoint は POST です。 ${this.commandMessage(command)}`,
+      message: `この endpoint は [POST] です。 ${this.commandMessage(command)}`,
       request,
     };
   }
@@ -59,12 +64,11 @@ export class SampleController {
     @Query() { command }: { command: string },
     @Body() data: any,
   ) {
-    console.log({ data });
-    const { url, method, originalUrl, params, query, body } = req;
-    const request = { url, method, originalUrl, params, query, body };
+    const { method, body } = req;
+    const request = { method, body };
     return {
       status: 200,
-      message: `この endpoint は PUT です。 ${this.commandMessage(command)}`,
+      message: `この endpoint は [PUT] です。 ${this.commandMessage(command)}`,
       request,
     };
   }
@@ -75,13 +79,13 @@ export class SampleController {
     @Query() { command }: { command: string },
     @Body() data: any,
   ) {
-    console.log('delete', { data });
-
-    const { url, method, originalUrl, params, query, body } = req;
-    const request = { url, method, originalUrl, params, query, body };
+    const { method, body } = req;
+    const request = { method, body };
     return {
       status: 200,
-      message: `この endpoint は DELETE です。 ${this.commandMessage(command)}`,
+      message: `この endpoint は [DELETE] です。 ${this.commandMessage(
+        command,
+      )}`,
       request,
     };
   }

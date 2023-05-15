@@ -13,18 +13,18 @@ import {
 import { Request } from 'express';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
-@Controller('api-factory')
-export class APIFactoriesController {
+@Controller('api-sample')
+export class SampleController {
   @Get('/')
   getSample(): Record<string, unknown> {
     return {
-      message: 'Hello, this is a mock API!',
+      message: 'この endpoint は GET です',
     };
   }
 
   @Post('/')
   postSample(@Req() req: Request, @Body() data: any) {
-    console.log({ data });
+    // リトライの挙動を確認するための記述
     if (data.try === 1 || data.try === 0)
       throw new HttpException(
         { message: 'token切れ' },
@@ -32,16 +32,12 @@ export class APIFactoriesController {
       );
 
     const { url, method, originalUrl, params, query, body } = req;
+    const request = { url, method, originalUrl, params, query, body };
+
     return {
       status: 200,
-      request: {
-        url,
-        method,
-        originalUrl,
-        params,
-        query,
-        body,
-      },
+      message: 'この endpoint は POST です',
+      request,
     };
   }
 
@@ -53,7 +49,7 @@ export class APIFactoriesController {
     const request = { url, method, originalUrl, params, query, body };
     return {
       status: 200,
-      message: 'このendpointはPUTです',
+      message: 'この endpoint は PUT です',
       request,
     };
   }
@@ -66,7 +62,7 @@ export class APIFactoriesController {
     const request = { url, method, originalUrl, params, query, body };
     return {
       status: 200,
-      message: 'このendpointはDELETEです',
+      message: 'この endpoint は DELETE です',
       request,
     };
   }

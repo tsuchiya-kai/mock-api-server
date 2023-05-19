@@ -25,9 +25,14 @@ export class SampleController {
     @Req() req: Request,
     @Query() { command }: { command: string },
   ): Record<string, unknown> {
-    const { method, query } = req;
-    const request = { method, query };
+    const {
+      method,
+      query,
+      headers: { 'content-type': contentType },
+    } = req;
+    const request = { method, query, contentType };
     return {
+      status: 200,
       message: `この endpoint は [GET] です。 ${this.commandMessage(command)}`,
       request,
     };
@@ -47,8 +52,12 @@ export class SampleController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const { method, body } = req;
-    const request = { method, body };
+    const {
+      method,
+      body,
+      headers: { 'content-type': contentType },
+    } = req;
+    const request = { method, body, contentType };
 
     return {
       status: 200,
@@ -64,8 +73,12 @@ export class SampleController {
     @Query() { command }: { command: string },
     @Body() data: any,
   ) {
-    const { method, body } = req;
-    const request = { method, body };
+    const {
+      method,
+      body,
+      headers: { 'content-type': contentType },
+    } = req;
+    const request = { method, body, contentType };
     return {
       status: 200,
       message: `この endpoint は [PUT] です。 ${this.commandMessage(command)}`,
@@ -79,8 +92,12 @@ export class SampleController {
     @Query() { command }: { command: string },
     @Body() data: any,
   ) {
-    const { method, body } = req;
-    const request = { method, body };
+    const {
+      method,
+      body,
+      headers: { 'content-type': contentType },
+    } = req;
+    const request = { method, body, contentType };
     return {
       status: 200,
       message: `この endpoint は [DELETE] です。 ${this.commandMessage(

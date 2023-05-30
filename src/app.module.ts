@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { SampleModule } from './sample/sample.module';
+import { SampleModule } from './addMethods/addMethods.module';
 import * as cors from 'cors';
 
 @Module({

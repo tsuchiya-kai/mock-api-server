@@ -1,9 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { SampleModule } from './addMethods/addMethods.module';
+import { addMethodsModule } from './addMethods/addMethods.module';
+import { RetryModule } from './retry/retry.module';
 import * as cors from 'cors';
 
 @Module({
-  imports: [SampleModule],
+  imports: [addMethodsModule, RetryModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

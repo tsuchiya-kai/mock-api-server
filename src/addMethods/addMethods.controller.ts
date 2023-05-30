@@ -15,7 +15,7 @@ import { Request } from 'express';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 @Controller('addMethods')
-export class SampleController {
+export class addMethodsController {
   commandMessage(command) {
     return command ? `なお指定された command は [${command}] です。` : '';
   }

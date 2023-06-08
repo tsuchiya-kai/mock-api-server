@@ -1,21 +1,22 @@
 import {
   Controller,
   Req,
+  Res,
   Get,
-  Query,
   Body,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('retry')
 export class RetryController {
+  private cookieName = 'isRetry';
+
   @Get('/')
-  getSample(
-    @Req() req: Request,
-    @Query() { isRetry }: { isRetry: 'true' | 'false' },
-  ): Record<string, unknown> | HttpException {
+  getSample(@Req() req: Request, @Res() res: Response) {
+    const isRetry = req.cookies[this.cookieName] as 'true' | 'false';
+
     console.log({ isRetry });
     if (isRetry === 'true') {
       const {
@@ -25,17 +26,27 @@ export class RetryController {
       } = req;
 
       const request = { method, query, contentType };
-      return {
+
+      res.clearCookie(this.cookieName);
+      res.status(200).json({
         status: 200,
         request,
-      };
+      });
+
+      return;
     }
 
     // gateway error
-    throw new HttpException(
-      { error: { type: 'invalid_session', message: '無効なセッションです' } },
-      HttpStatus.BAD_REQUEST,
-    );
+    res.cookie(this.cookieName, 'true', {
+      maxAge: 900000,
+      httpOnly: true,
+      // secure: true,
+      // sameSite: 'none',
+    });
+
+    res.status(HttpStatus.BAD_REQUEST).json({
+      error: { type: 'invalid_session', message: '無効なセッションです' },
+    });
   }
 
   @Get('/apis/init')

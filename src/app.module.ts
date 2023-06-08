@@ -8,6 +8,8 @@ import * as cors from 'cors';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cors()).forRoutes('http://127.0.0.1:8081'); // * にするとcorsを全て無効化する
+    consumer
+      .apply(cors())
+      .forRoutes(...['http://127.0.0.1:8081', 'http://zozo-localhost.jp']); // * にするとcorsを全て無効化する
   }
 }

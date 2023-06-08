@@ -40,8 +40,8 @@ export class RetryController {
     res.cookie(this.cookieName, 'true', {
       maxAge: 900000,
       httpOnly: true,
-      // secure: true,
-      // sameSite: 'none',
+      secure: true,
+      sameSite: 'none',
     });
 
     res.status(HttpStatus.BAD_REQUEST).json({

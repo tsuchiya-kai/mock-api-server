@@ -11,7 +11,7 @@ async function bootstrap() {
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders:
-      'Content-Type, Accept,Origin, X-Requested-With, Content-Type, Accept, Set-Cookie',
+      'Content-Type, Accept,Origin, X-Requested-With, Content-Type, Accept, Set-Cookie, zozo-web-gateway-api-key',
     credentials: true,
   });
 

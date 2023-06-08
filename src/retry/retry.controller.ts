@@ -27,7 +27,11 @@ export class RetryController {
 
       const request = { method, query, contentType };
 
-      res.clearCookie(this.cookieName);
+      res.clearCookie(this.cookieName, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
       res.status(200).json({
         status: 200,
         request,
